@@ -1,59 +1,97 @@
-import React from "react";
-import assets from "../assets/assets";
-import Title from "./Title";
-import ServiceCard from "./ServiceCard";
 import { motion } from "motion/react";
+import { Bot, Gauge, GitBranch, Workflow } from "lucide-react";
+import ServiceCard from "./ServiceCard";
+
+const services = [
+  {
+    title: "Workflow audit",
+    description:
+      "Find the repeated tasks, slow handoffs, and missing context that create unnecessary operational drag.",
+    icon: Gauge,
+    outcomes: [
+      "A map of the current workflow",
+      "Priority areas for improvement",
+      "Clear human review points",
+    ],
+  },
+  {
+    title: "Automation design",
+    description:
+      "Turn the strongest opportunities into a practical system with defined triggers, tools, ownership, and exceptions.",
+    icon: Workflow,
+    outcomes: [
+      "A step-by-step automation plan",
+      "Tool and integration recommendations",
+      "Defined ownership at every handoff",
+    ],
+  },
+  {
+    title: "AI-assisted operations",
+    description:
+      "Use AI where it is genuinely useful: organizing intake, preparing summaries, drafting updates, and routing work.",
+    icon: Bot,
+    outcomes: [
+      "Faster request processing",
+      "More consistent operational context",
+      "Human approval where it matters",
+    ],
+  },
+  {
+    title: "Iteration and handoff",
+    description:
+      "Document the system, measure its usefulness, and make it understandable for the people responsible for running it.",
+    icon: GitBranch,
+    outcomes: [
+      "Simple operating documentation",
+      "A plan for ongoing improvement",
+      "A workflow your team can own",
+    ],
+  },
+];
 
 const Services = () => {
-  const servicesData = [
-    {
-      title: "Advertising",
-      description:
-        "We turn bold ideas into powerful digital solutions that connect, engage...",
-      icon: assets.ads_icon,
-    },
-    {
-      title: "Content marketing",
-      description: "We help you execute your plan and deliver results.",
-      icon: assets.marketing_icon,
-    },
-    {
-      title: "Content writing",
-      description:
-        "We help you create a marketing strategy that drives results.",
-      icon: assets.content_icon,
-    },
-    {
-      title: "Social media",
-      description:
-        "We help you build a strong social media presence and engage with your audience.",
-      icon: assets.social_icon,
-    },
-  ];
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      transition={{ staggerChildren: 0.2 }}
-      viewport={{ once: true }}
+    <section
       id="services"
-      className="relative flex flex-col items-center gap-7 px-4 sm:px-12 lg:px-24 xl:px-40 pt-30 text-gray-700 dark:text-white"
+      className="bg-[#070b12] px-5 py-20 text-slate-100 sm:px-8 md:py-28 lg:px-12"
     >
-      <img
-        src={assets.bgImage2}
-        alt=""
-        className="absolute -top-110 -left-70 -z-1 dark:hidden"
-      />
-      <Title
-        title="How can we help?"
-        desc="From strategy to execution, we craft digital solutions that move your business forward."
-      />
-      <div className="flex flex-col md:grid grid-cols-2">
-        {servicesData.map((service, index) => (
-          <ServiceCard key={index} service={service} index={index} />
-        ))}
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, amount: 0.25 }}
+          >
+            <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-300">
+              How we help
+            </p>
+
+            <h2 className="mt-5 text-4xl font-semibold tracking-[-0.05em] text-white sm:text-5xl">
+              Practical systems for work that repeats.
+            </h2>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.25 }}
+            className="max-w-2xl text-lg leading-8 text-slate-400"
+          >
+            We start with the work your team already does, then design
+            AI-assisted workflows that reduce friction without removing the
+            judgment people need to do good work.
+          </motion.p>
+        </div>
+
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {services.map((service, index) => (
+            <ServiceCard key={service.title} service={service} index={index} />
+          ))}
+        </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 

@@ -1,51 +1,59 @@
-import React, { useRef, useState } from "react";
 import { motion } from "motion/react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 
 const ServiceCard = ({ service, index }) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [visible, setVisible] = useState(false);
-  const divRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const bounds = divRef.current.getBoundingClientRect();
-    setPosition({
-      x: e.clientX - bounds.left,
-      y: e.clientY - bounds.top,
-    });
-  };
+  const Icon = service.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      viewport={{ once: true }}
-      className="relative overflow-hidden max-w-lg m-2 sm:m-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-2xl shadow-gray-100 dark:shadow-white/10"
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-      ref={divRef}
-      onMouseMove={handleMouseMove}
+      transition={{ duration: 0.45, delay: index * 0.1 }}
+      viewport={{ once: true, amount: 0.25 }}
+      className="group flex h-full flex-col rounded-2xl border border-white/10 bg-slate-900/55 p-6 transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-slate-900"
     >
-      <div
-        className={`pointer-events-none blur-2xl rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 w-[300px] h-[300px] absolute z-0 transition-opacity duration-500 mix-blend-lighten ${
-          visible ? "opacity-70" : "opacity-0"
-        }`}
-        style={{ left: position.x - 150, top: position.y - 150 }}
-      />
-      <div className="flex items-center gap-10 p-8 hover:p-7.5 hover:m-0.5 transition-all rounded-[10px] bg-white dark:bg-gray-900 z-10 relative">
-        <div className="bg-gray-100 dark:bg-gray-700 rounded-full">
-          <img
-            src={service.icon}
-            alt=""
-            className="max-w-24 bg-white dark:bg-gray-900 rounded-full m-2"
-          />
-        </div>
-        <div className="flex-1">
-          <p className="font-bold">{service.title}</p>
-          <p className="text-sm mt-2">{service.description}</p>
-        </div>
+      <div className="flex items-start justify-between gap-5">
+        <span className="grid h-11 w-11 place-items-center rounded-xl border border-emerald-400/20 bg-emerald-400/10 text-emerald-300">
+          <Icon size={21} strokeWidth={1.8} aria-hidden="true" />
+        </span>
+
+        <span className="font-mono text-xs text-slate-600">
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
-    </motion.div>
+
+      <h3 className="mt-9 text-2xl font-semibold tracking-[-0.03em] text-white">
+        {service.title}
+      </h3>
+
+      <p className="mt-4 text-sm leading-7 text-slate-400">
+        {service.description}
+      </p>
+
+      <div className="mt-6 space-y-3 border-t border-white/10 pt-6">
+        {service.outcomes.map((outcome) => (
+          <p
+            key={outcome}
+            className="flex items-start gap-2 text-sm leading-6 text-slate-300"
+          >
+            <CheckCircle2
+              size={16}
+              className="mt-0.5 shrink-0 text-emerald-300"
+              aria-hidden="true"
+            />
+            <span>{outcome}</span>
+          </p>
+        ))}
+      </div>
+
+      <a
+        href="#contact-us"
+        className="mt-auto inline-flex items-center gap-2 border-t border-white/10 pt-6 text-sm font-semibold text-cyan-300 transition hover:text-cyan-200"
+      >
+        Discuss this workflow
+        <ArrowUpRight size={16} aria-hidden="true" />
+      </a>
+    </motion.article>
   );
 };
 
